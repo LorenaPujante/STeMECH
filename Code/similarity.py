@@ -191,7 +191,7 @@ def mainFunction_write(simMethod, df, is01):
         # Preparar datos para el clustering
     data, listPats = dataframeToArray(df)
         # Guardar datos en un fichero csv
-    writeSimilarityMatrixInCSV(data, listPats, simMethod, is01, 0)
+    writeSimilarityMatrixInCSV(data, listPats, simMethod, is01)
 
 
 
