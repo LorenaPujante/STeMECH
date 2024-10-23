@@ -7,11 +7,8 @@ from config import *
 # LECTURA / ESCRITURA      #
 ############################
 
-def writeSimilarityMatrixInCSV(data, listPats, simMethod, n01, folder):
-    if folder == 0:
-        nameFolder_SimArrays = required_parameters['nameFolder_SimArrays_0']
-    else:
-        nameFolder_SimArrays = required_parameters['nameFolder_SimArrays']
+def writeSimilarityMatrixInCSV(data, listPats, simMethod, n01):
+    nameFolder_SimArrays = required_parameters['nameFolder_SimArrays']
     fileName = nameFolder_SimArrays + '/' + getSimilarityMethodName_Short(simMethod)
     if n01:
         fileName += '_01'
