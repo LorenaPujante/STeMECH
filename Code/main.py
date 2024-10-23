@@ -9,7 +9,6 @@ from trajectoriesCreator import *
 from trajectoriesMatcher import *
 from similarity import *
 from similarityCalculator import *
-from plot import visualizationOfHeatMapBtwPatients
 from writer_reader_similarities import *
 from clustering import *
 
@@ -64,16 +63,18 @@ def main():
     # SIMILARITIES #
     maxDiffSteps = maxNSteps-1      # Si hay, por ejemplo, 50 steps ->  La máxima diferencia será: 50-1 = 49    # Este parametro es para la normalizacion de la Distancia Temporal
     arrayDataframes, arrayDataframes_01 = calculateTrajectoriesSimilarity(dicTrajectories, dicPatTMStep, sp_matrix01, hu_matrix, maxDiffSteps, required_parameters['beta'], required_parameters['alfa'], required_parameters['margin'], required_parameters['similarityFunctions'], maxNSteps)
-    
+    print("\n\nEVERYTHING IS DONE!")
+
+    # It is not needed since it is already done in calculateTrajectoriesSimilarity()
     # NORMALIZACION DE LAS SIMILITUDES A [0,1]
-    print("\nNORMALIZANDO SIMILITUDES A [0,1]")
+    '''print("\nNORMALIZANDO SIMILITUDES A [0,1]")
     arrayDataframes_01 = normaliceTo01_arrayDataFrames(arrayDataframes, dicTrajectories, sp_matrix01, maxNSteps)
             
 
     # GUARDAR EN FICHEROS
     print("\nGUARDANDO DATOS EN FICHEROS")
     writeDataframes(arrayDataframes, False, 1)
-    writeDataframes(arrayDataframes_01, True, 1)
+    writeDataframes(arrayDataframes_01, True, 1)'''
     
     
 
