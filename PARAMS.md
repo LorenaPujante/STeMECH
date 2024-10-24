@@ -1,0 +1,25 @@
+- **zero**: False                  
+- **repository**: "nameRepository"
+- **dateStart**: "2024-03-01T00:00:00"    # TODO
+- **dateEnd**: "2024-03-13T23:59:59"      # TODO
+- **idLoc**: 1306                # TODO   
+- **idMicroorg**: 1434
+- **maxDaysTrajForward**: 7      # TODO
+- **similarityFunctions**: ['tsJoin', 'tsJoin_2',  'dtw', 'dtw_st', 'lcss', 'lcss_2']
+- **beta**: 0.45
+- **alfa**: 0.5
+- **maxStepsBackwardLCSS**: 5    # TODO
+- **margin**: 5
+- **nameFolder_Matrix**: './matrixes'
+- **nameFolder_SimArrays**: './similarityArrays'
+- **nameFolder_Figures**: './figures'
+- **nameFolder_Outputs**: './outputs'
+- **timeInFile**: True
+- **nameFolder_Time**: './time'
+- **normalice01**: True
+- **annotated**: True
+- **maxClustersPats**: True
+- **numRows**: 4
+- **meshSize**: 0.02
+- **Ks**: [3,3, 3,3, 3,3]
+- **barColors**:  ['mediumturquoise', 'lightseagreen',  'salmon', 'tomato',  'cornflowerblue', 'royalblue']
