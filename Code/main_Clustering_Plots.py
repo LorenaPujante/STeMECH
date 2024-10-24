@@ -27,7 +27,7 @@ def main():
 
     for ind in range(len(required_parameters['similarityFunctions'])):
         simMethod = required_parameters['similarityFunctions'][ind]
-        k = secondMain_parameters['Ks'][ind]
+        k = required_parameters_clustering['Ks'][ind]
     
         # Read data from files
         data, pats = readCSVToSimilarityMatrix(simMethod)
@@ -105,7 +105,7 @@ def main():
     validationScores.append(pairTotalSep)
     
 
-    visualizationValidationScores_bis(validationScores, required_parameters['numRows'])
+    visualizationValidationScores_bis(validationScores, required_parameters_clustering['numRows'])
 
 
 
