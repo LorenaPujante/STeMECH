@@ -30,8 +30,8 @@ def lcss_wtw(stepsP1, stepsP2, sp_matrix, hu_matrix, maxDiffSteps, beta, alfa, s
     step1_step = headP1[0]
     step2_bedHU = headP2[1]
     step2_step = headP2[0]
-    if matrixes['matrixLCSS_2'][step1_step][step2_step] is not None:
-        listaSoluciones = matrixes['matrixLCSS_2'][step1_step][step2_step]
+    if matrixes_opt['matrixLCSS_2'][step1_step][step2_step] is not None:
+        listaSoluciones = matrixes_opt['matrixLCSS_2'][step1_step][step2_step]
         
         stepsUsed1_step = []
         stepsUsed2_step = []
@@ -279,10 +279,10 @@ def lcss_wtw(stepsP1, stepsP2, sp_matrix, hu_matrix, maxDiffSteps, beta, alfa, s
         similarity = maxSim
 
         # Optimizacion
-        if matrixes['matrixLCSS_2'][step1_step][step2_step] is None:
-            matrixes['matrixLCSS_2'][step1_step][step2_step] = []
+        if matrixes_opt['matrixLCSS_2'][step1_step][step2_step] is None:
+            matrixes_opt['matrixLCSS_2'][step1_step][step2_step] = []
         solucion = [nMatches,similarity,steps1Sol_r1,steps2Sol_r1]
-        matrixes['matrixLCSS_2'][step1_step][step2_step].append(solucion)
+        matrixes_opt['matrixLCSS_2'][step1_step][step2_step].append(solucion)
 
         return nMatches, similarity
 
@@ -329,9 +329,9 @@ def lcss_wtw(stepsP1, stepsP2, sp_matrix, hu_matrix, maxDiffSteps, beta, alfa, s
         steps1_r2.append(s[0])
     for s in stepsUsed2:
         steps2_r2.append(s[0])
-    if matrixes['matrixLCSS_2'][step1_step][step2_step] is None:
-        matrixes['matrixLCSS_2'][step1_step][step2_step] = []
+    if matrixes_opt['matrixLCSS_2'][step1_step][step2_step] is None:
+        matrixes_opt['matrixLCSS_2'][step1_step][step2_step] = []
     solucion = [nMatches,similarity,steps1_r2,steps2_r2]
-    matrixes['matrixLCSS_2'][step1_step][step2_step].append(solucion)
+    matrixes_opt['matrixLCSS_2'][step1_step][step2_step].append(solucion)
 
     return nMatches, similarity
