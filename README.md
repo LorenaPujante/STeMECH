@@ -66,11 +66,11 @@ The parameters for STeMECH are the following:
 - **alfa**: The α parameter of the equation for the _spatiotemporal similarity_ between sampling points.
 - **maxStepsBackwardLCSS**: For the _LCSS_ and _LCSS_WTW_ algorithms, the maximum allowed number of difference between two steps. If the distance in steps is bigger than this value, there won't be a match between the sampling points.
 - **margin**: For the _LCSS_WTW_ algorithm, the number of steps with which we do the match check forward and backwards.
-- **nameFolder_Matrix**: The path to the folder where to store the matrixes to calculate the spatial similarity.
-- **nameFolder_Matrix**: The path to the folder where to store the matrixes to calculate the spatial similarity.
-- **nameFolder_Matrix**: The path to the folder where to store the matrixes to calculate the spatial similarity.
-- **nameFolder_Matrix**: The path to the folder where to store the matrixes to calculate the spatial similarity.
+- **nameFolder_Matrix**: The path to the folder where to store the matrixes to calculate the spatial similarity. They are stored in CSV files. The headers of the matrixes (the id of the locations) are stored in this folder.   
+- **nameFolder_SimArrays**: The path to the folder where to store the similarity matrixes between patients' trajectories. They are stored in CSV files. The result of each algorithm is stored in a separate file. The arrays with the similarities normalised to range [0,1] are also stored here with the name ending with "__01_".
+- **nameFolder_Figures**: The path to the folder where to store the matrixes to calculate the spatial similarity.
+- **nameFolder_Outputs**: The path to the folder where to store the matrixes to calculate the spatial similarity.
 - **timeInFile**: 
-- **nameFolder_Matrix**: The path to the folder where to store the matrixes to calculate the spatial similarity.
+- **nameFolder_Time**: The path to the folder where to store the matrixes to calculate the spatial similarity.
 ## 6. Output
 TODO
