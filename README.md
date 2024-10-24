@@ -2,6 +2,8 @@
 
 TODO
 
+**IMPORTANT:** Also read the file [PARAMS.md](https://github.com/LorenaPujante/STeMECH/blob/main/PARAMS.md)
+
 ## 0. Related Repositories
 Below, we present some other related repositories that may be of interest to you:
 - [**HospitalKG_changes**](https://github.com/LorenaPujante/HospitalKG_Changes): It is also linked to [~~doi: TODO~~](NULL).
@@ -80,6 +82,8 @@ Here there are the parameters for some of the _main_ files.
 - **meshSize**: This parameter is only used in _main_Clustering_Plots.py_. It determines the "definition" of the chart showing the points of each cluster in a bi-dimensional chart.
 - **Ks**: This parameter is only used in _main_Clustering_Plots.py_. It is an array that for each trajectory similarity measurement algorithm saves which value of _K_ returns the clusters with the optimum cohesion and separation. It must be the same size as _similarityFunctions_ and follow its order.
 - **barColors**: This parameter is only used in _main_Clustering_Plots.py_. It is an array with the colors for the bars of the charts that show the clustering metrics for each trajectory similarity algorithm.
+
+In the file [PARAMS.md](https://github.com/LorenaPujante/STeMECH/blob/main/PARAMS.md) we present the values for all these parameters used to create the dataset for the work [~~doi: TODO~~](NULL).
 
 
 ## 6. Output
