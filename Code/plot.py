@@ -154,7 +154,7 @@ def visualizationValidationScores_bis(validationScores, numRows):
 def plotterValidationScores_bis(ax, fig, dataX, dataY, title, barLabels):
 
     out = ax.bar(dataX, dataY,
-                  color=secondMain_parameters['barColors'],
+                  color=required_parameters_clustering['barColors'],
                   width=0.8,
                   label=barLabels)
     
@@ -175,7 +175,7 @@ def plotterValidationScores_bis(ax, fig, dataX, dataY, title, barLabels):
         minDataY = min(dataY)
         if minDataY<0:
             if minDataY > -1:
-                minYLim = round(minYLim-0.2, 1)
+                minYLim = round(minDataY-0.2, 1)    # Antes habia un minYLim
             else:
                 minYLim = math.floor(minDataY)  
             ax.set_ylim(bottom=minYLim)
