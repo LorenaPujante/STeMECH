@@ -21,7 +21,7 @@ def main():
     print("min: {}  -  max: {}".format(minClusters, maxClusters))
         
 
-    allValidationScores = check_ValidationScores_ForRangeKClusters_allSimilarities(arrayDataframes, required_parameters['similarityFunctions'], minClusters, maxClusters, required_parameters['numRows'], None)
+    allValidationScores = check_ValidationScores_ForRangeKClusters_allSimilarities(arrayDataframes, required_parameters['similarityFunctions'], minClusters, maxClusters, required_parameters_clustering['numRows'], None)
     writeResultsClustering_allKs(allValidationScores, minClusters, maxClusters)
 
 
@@ -43,7 +43,7 @@ def getMaxNumClustersToTry(data, minClusters):
         else:
             i += 1
 
-    if required_parameters['maxClustersPats']:  # Se probaran hasta tantos clusters como pacientes-1
+    if required_parameters_clustering['maxClustersPats']:  # Se probaran hasta tantos clusters como pacientes-1
         maxClusters = numPats-1
     else:
         maxClusters = math.ceil(numPats/2)  # Se probaran hasta una k = a la mitad de pacientes
