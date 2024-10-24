@@ -24,8 +24,8 @@ def dtw(stepsP1, stepsP2, sp_matrix, hu_matrix):
     step2 = headP2[0]
     
     # Optimizacion
-    if matrixes['matrixDTW'][step1][step2] is not None:
-        return matrixes['matrixDTW'][step1][step2]
+    if matrixes_opt['matrixDTW'][step1][step2] is not None:
+        return matrixes_opt['matrixDTW'][step1][step2]
     
     sim_HeadP1_HeadP2 = getSpatialSimilarity(ev1, ev2, sp_matrix, hu_matrix)
     
@@ -37,6 +37,6 @@ def dtw(stepsP1, stepsP2, sp_matrix, hu_matrix):
 
     similarity = sim_HeadP1_HeadP2 + maxSimilarity
     # Optimizacion
-    matrixes['matrixDTW'][step1][step2] = similarity
+    matrixes_opt['matrixDTW'][step1][step2] = similarity
     
     return similarity
