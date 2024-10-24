@@ -23,8 +23,8 @@ def dtw_SpTemp(stepsP1, stepsP2, sp_matrix, hu_matrix, maxDiffSteps, beta, alfa)
     step2 = headP2[0]
     
     # Optimizacion
-    if matrixes['matrixDTW_SP'][step1][step2] is not None:
-        return matrixes['matrixDTW_SP'][step1][step2]
+    if matrixes_opt['matrixDTW_SP'][step1][step2] is not None:
+        return matrixes_opt['matrixDTW_SP'][step1][step2]
 
 
     sim_HeadP1_HeadP2 = getSimilarity(headP1, headP2, sp_matrix, hu_matrix, maxDiffSteps, beta, alfa)
@@ -37,6 +37,6 @@ def dtw_SpTemp(stepsP1, stepsP2, sp_matrix, hu_matrix, maxDiffSteps, beta, alfa)
 
     similarity = sim_HeadP1_HeadP2 + maxSimilarity
     # Optimizacion
-    matrixes['matrixDTW_SP'][step1][step2] = similarity
+    matrixes_opt['matrixDTW_SP'][step1][step2] = similarity
     
     return similarity
