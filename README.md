@@ -47,7 +47,7 @@ The file [**main_NumCases.py**](https://github.com/LorenaPujante/STeMECH/blob/ma
 
 
 ## 5. Configuration params
-The parameters for STeMECH are the following:
+Here there are the parameters for the execution of, mainly, _main.py_ but also the rest of the _main_files:
 - **zero**: It indicates if it is necessary to ask the database for the matrixes to calculate the spatial distance. If _False_, they must be stored in _Code/matrixes_.
 - **repository**: The name of the GraphDB repository with the input dataset.
 - **dateStart**: The date and time to start searching for patients with a positive _TestMicro_ for a specific _Microorganism_.
@@ -55,7 +55,7 @@ The parameters for STeMECH are the following:
 - **idLoc**: Value for the _id_ attribute of the _Floor_ where to search the infected patients.
 - **idMicroorg**: The value for the _id_ attribute of the _Microorganism_ whose infected patients we are searching.
 - **maxDaysTrajForward**: When we already have found the patients infected during a period, we will also search for other events of these patients, at most, during the indicated days.
-- **similarityFunctions**: The _ids_ of the _Trajectory similarity measurement_ algorithms to be run. The allow values are:
+- **similarityFunctions**: The _ids_ of the _Trajectory similarity measurement_ algorithms to be run. The allowed values are:
   - _dtw_: for Dynamic Time Warping (DTW).
   - _dtw_st_: for Spatiotemporal DTW (ST-DTW).
   - _lcss_: for Spatiotemporal Longest Common Subsequence (ST-LCSS).
@@ -66,11 +66,21 @@ The parameters for STeMECH are the following:
 - **alfa**: The α parameter of the equation for the _spatiotemporal similarity_ between sampling points.
 - **maxStepsBackwardLCSS**: For the _LCSS_ and _LCSS_WTW_ algorithms, the maximum allowed number of difference between two steps. If the distance in steps is bigger than this value, there won't be a match between the sampling points.
 - **margin**: For the _LCSS_WTW_ algorithm, the number of steps with which we do the match check forward and backwards.
-- **nameFolder_Matrix**: The path to the folder where to store the matrixes to calculate the spatial similarity. They are stored in CSV files. The headers of the matrixes (the id of the locations) are stored in this folder.   
-- **nameFolder_SimArrays**: The path to the folder where to store the similarity matrixes between patients' trajectories. They are stored in CSV files. The result of each algorithm is stored in a separate file. The arrays with the similarities normalised to range [0,1] are also stored here with the name ending with "__01_".
-- **nameFolder_Figures**: The path to the folder where to store the matrixes to calculate the spatial similarity.
-- **nameFolder_Outputs**: The path to the folder where to store the matrixes to calculate the spatial similarity.
-- **timeInFile**: 
-- **nameFolder_Time**: The path to the folder where to store the matrixes to calculate the spatial similarity.
+- **nameFolder_Matrix**: The path to the folder where to save the matrixes to calculate the spatial similarity. They are saved in CSV files. The headers of the matrixes (the id of the locations) are saved in this folder.   
+- **nameFolder_SimArrays**: The path to the folder where to save the similarity matrixes between patients' trajectories. They are saved in CSV files. The result of each algorithm is saved in a separate file. The arrays with the similarities normalised to range [0,1] are also saved here with the name ending with "__01_".
+- **nameFolder_Figures**: The path to the folder where to save the figures with the resume of the results of all the _main_ files.
+- **nameFolder_Outputs**: The path to the folder where to save the matrixes to calculate the spatial similarity.
+- **timeInFile**: If it is _True_, the execution time of each similarity measurement algorithm for each pair of trajectories will be saved in a file. 
+- **nameFolder_Time**: The path to the folder with the file with the execution time of each similarity measurement algorithm for each pair of trajectories.
+
+Here there are the parameters for some of the _main_ files.
+- **annotated**: This parameter is only used in _main_Heatmap.py_. If it is _True_, the heatmaps with the trajectory similarities between patients will also show in each cell the value of the trajectory similarity between the pair of patients.
+- **maxClustersPats**: This parameter is only used in _main_Clustering_Ks.py_. If it is _True_, when searching for the best value of _K_ for the K-Means clustering algorithm, the tested _Ks_ will be in the range [2, *_*numPatients-1_**]. If it is _False_, the _Ks_ will be in the range [2, **_numPatients/2_**].
+- **numRows**: This parameter is used in _main_Clustering_Ks.py_ and _main_Clustering_Plots.py_. It determines how many rows will have the image that shows the bar charts of the clustering metrics for each value of _K_ or trajectory similarity algorithm.
+- **meshSize**: This parameter is only used in _main_Clustering_Plots.py_. It determines the "definition" of the chart showing the points of each cluster in a bi-dimensional chart.
+- **Ks**: This parameter is only used in _main_Clustering_Plots.py_. It is an array that for each trajectory similarity measurement algorithm saves which value of _K_ returns the clusters with the optimum cohesion and separation. It must be the same size as _similarityFunctions_ and follow its order.
+- **barColors**: This parameter is only used in _main_Clustering_Plots.py_. It is an array with the colors for the bars of the charts that show the clustering metrics for each trajectory similarity algorithm.
+
+
 ## 6. Output
 TODO
