@@ -1,4 +1,7 @@
 
+##############
+# PARAMETERS #
+##############
 
 required_parameters = {
     # Graph and trajectories
@@ -8,47 +11,50 @@ required_parameters = {
     'dateEnd': "2024-03-13T23:59:59", #"2024-01-19T23:59:59" #Test2,       # "2023-01-12T23:59:59",    # Para Test1
     'idLoc': 1306, #1339 #Test2,      # "1335",  # Para Test1   
     'idMicroorg': 1434, #1435 #Test2,     #" 1429",   # Para Test1
-    'maxDaysTrajForward': 7,#7,
-    'timeInFile': True, 
+    'maxDaysTrajForward': 7,#7, 
     # Similarity methods
+    'similarityFunctions': ['tsJoin', 'tsJoin_2',  'dtw', 'dtw_st', 'lcss', 'lcss_2'],
     'beta': 0.45,
     'alfa': 0.5,
     'maxStepsBackwardLCSS': 5,  # DEFINICION DE BROTE   # 1 Día = 3 steps -> Dos Eventos están en el mismo día cuando la diferencia es, como máximo, 2. 
     'margin': 5,
-    'similarityFunctions': ['tsJoin', 'tsJoin_2',  'dtw', 'dtw_st', 'lcss', 'lcss_2'],
-    # Visualization heatmap
-    'heatmap': True,
-    'annotated': True,
-    # Clustering
-    'normalice01': True,
-    'minClusters': 4,
-    'maxClusters': 4,
-    'maxClustersPats': True,
-    'numRows': 4,
     # Folders
     'nameFolder_Matrix': './matrixes',
     'nameFolder_SimArrays': './similarityArrays',
-    'nameFolder_SimArrays_0': './similarityArrays_0',
     'nameFolder_Figures': './figures',
     'nameFolder_Outputs': './outputs',
-    'nameFolder_Time': './time'
+    'timeInFile': True,
+    'nameFolder_Time': './time',
+    # Others
+    'normalice01': True
 }
 
-secondMain_parameters = {
-    'Ks': [3,3], #[3,3, 3,3, 3,3],
-    'barColors': ['cornflowerblue', 'royalblue'] #['mediumturquoise', 'lightseagreen',  'salmon', 'tomato',  'cornflowerblue', 'royalblue']
+required_parameters_heatmap = {
+    'annotated': True
 }
 
-
-matrixes = {
-    'matrixDTW': [[None] * 50] * 50,
-    'matrixDTW_SP': [[None] * 50] * 50,
-    'matrixLCSS': [[None] * 50] * 50,
-    'matrixLCSS_2': [[None] * 50] * 50
+required_parameters_clustering = {
+    'maxClustersPats': True,
+    'numRows': 4,
+    'meshSize': 0.02,
+    'Ks': [3,3, 3,3, 3,3],
+    'barColors':  ['mediumturquoise', 'lightseagreen',  'salmon', 'tomato',  'cornflowerblue', 'royalblue'] # ['royalblue']
 }
 
 
 ####################################################################################################################
+
+
+matrixes_opt = {
+    'matrixDTW': [[None for x in range(100)] for y in range(100)],
+    'matrixDTW_SP': [[None for x in range(100)] for y in range(100)],
+    'matrixLCSS': [[None for x in range(100)] for y in range(100)],
+    'matrixLCSS_2': [[None for x in range(100)] for y in range(100)]
+}
+
+
+####################################################################################################################
+
 
 def getSimilarityMethodName_Long(similarity):
     if similarity == 'dtw':
@@ -109,6 +115,4 @@ def getNameValidationScore(vs):
         return "Average Scatteing for Clusters"
     if vs == 'totalSep':
         return "Total Separation between Clusters"
-
-# margin = 2  # TODO: 1, 2 o 3 ¿?     ->  2 Serían hasta 24 horas
 
