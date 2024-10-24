@@ -10,6 +10,7 @@ import numpy as np
 
 from config import *
 from trajectoriesMatcher import *
+from createDataframe import *
 
 from trajectoryDist_DTW import dtw
 from trajectoryDist_DTW_SpTemp import dtw_SpTemp
@@ -230,12 +231,6 @@ def createDataframePatXPatZeros(dicTrajectories):
 
     return dfSimilarities
 
-def createDataframePatXPatZeros_givenListPats(listPats):
-    nPats = len(listPats)
-    dfSimilarities = pd.DataFrame(np.zeros((nPats, nPats)), columns=listPats, index=listPats, dtype=float)
-
-    return dfSimilarities
-
 
 def setSim0(pat1, pat2,  df_dtw, df_dtw_st, df_lcss, df_lcss_2, df_tsJoin, df_tsJoin_2, similarityFunctions):
 
@@ -266,13 +261,13 @@ def calculateSimilarities(pat1, pat2,  stepsP1, stepsP2,  sp_matrix01, hu_matrix
     if simFunction == 'dtw' and df_dtw is not None:
         maxStep = getMaxStep(stepsP1, stepsP2)
         # SIMILARITY 1
-        matrixes['matrixDTW'] = [[None for x in range(maxStep)] for y in range(maxStep)]
+        matrixes_opt['matrixDTW'] = [[None for x in range(maxStep)] for y in range(maxStep)]
         sim_1, diff_secs, diff_mins = getSimilarityDTW(stepsP1, stepsP2, sp_matrix01, hu_matrix)
         print("\tSim_1: {} \n\t\tTime: {:.6f} secs\t- {:.6f} mins".format(sim_1, diff_secs, diff_mins))
         if required_parameters['timeInFile']:
             file.write("{}_{}: {:.6f} secs\t- {:.6f} mins\n".format(pat1, pat2, diff_secs, diff_mins))
         # SIMILARITY 2S
-        matrixes['matrixDTW'] = [[None for x in range(maxStep)] for y in range(maxStep)]
+        matrixes_opt['matrixDTW'] = [[None for x in range(maxStep)] for y in range(maxStep)]
         sim_2, diff_secs, diff_mins = getSimilarityDTW(stepsP2, stepsP1, sp_matrix01, hu_matrix)
         print("\tSim_2: {} \n\t\tTime: {:.6f} secs\t- {:.6f} mins".format(sim_2, diff_secs, diff_mins))
         if required_parameters['timeInFile']:
@@ -285,13 +280,13 @@ def calculateSimilarities(pat1, pat2,  stepsP1, stepsP2,  sp_matrix01, hu_matrix
     elif simFunction == 'dtw_st' and df_dtw_st is not None:
         maxStep = getMaxStep(stepsP1, stepsP2)
         # SIMILARITY 1
-        matrixes['matrixDTW_SP'] = [[None for x in range(maxStep)] for y in range(maxStep)]
+        matrixes_opt['matrixDTW_SP'] = [[None for x in range(maxStep)] for y in range(maxStep)]
         sim_1, diff_secs, diff_mins = getSimilarityDTW_SpTemp(stepsP1, stepsP2, sp_matrix01, hu_matrix, maxDiffSteps, beta, alfa)
         print("\tSim_1: {} \n\t\tTime: {:.6f} secs\t- {:.6f} mins".format(sim_1, diff_secs, diff_mins))
         if required_parameters['timeInFile']:
             file.write("{}_{}: {:.6f} secs\t- {:.6f} mins\n".format(pat1, pat2, diff_secs, diff_mins))
         # SIMILARITY 2
-        matrixes['matrixDTW_SP'] = [[None for x in range(maxStep)] for y in range(maxStep)]
+        matrixes_opt['matrixDTW_SP'] = [[None for x in range(maxStep)] for y in range(maxStep)]
         sim_2, diff_secs, diff_mins = getSimilarityDTW_SpTemp(stepsP2, stepsP1, sp_matrix01, hu_matrix, maxDiffSteps, beta, alfa)
         print("\tSim_2: {} \n\t\tTime: {:.6f} secs\t- {:.6f} mins".format(sim_2, diff_secs, diff_mins))
         if required_parameters['timeInFile']:
@@ -303,13 +298,13 @@ def calculateSimilarities(pat1, pat2,  stepsP1, stepsP2,  sp_matrix01, hu_matrix
     elif simFunction == 'lcss' and df_lcss is not None:
         maxStep = getMaxStep(stepsP1, stepsP2)
         # SIMILARITY 1
-        matrixes['matrixLCSS'] = [[None for x in range(maxStep)] for y in range(maxStep)] #[[None] * maxStep] * maxStep
+        matrixes_opt['matrixLCSS'] = [[None for x in range(maxStep)] for y in range(maxStep)] #[[None] * maxStep] * maxStep
         sim_1, diff_secs, diff_mins = getSimilarityLCSS(stepsP1, stepsP2, sp_matrix01, hu_matrix, maxDiffSteps, beta, alfa)
         print("\tSim_1: {} \n\t\tTime: {:.6f} secs\t- {:.6f} mins".format(sim_1, diff_secs, diff_mins))
         if required_parameters['timeInFile']:
             file.write("{}_{}: {:.6f} secs\t- {:.6f} mins\n".format(pat1, pat2, diff_secs, diff_mins))
         # SIMILARITY 2
-        matrixes['matrixLCSS'] = [[None for x in range(maxStep)] for y in range(maxStep)]
+        matrixes_opt['matrixLCSS'] = [[None for x in range(maxStep)] for y in range(maxStep)]
         sim_2, diff_secs, diff_mins = getSimilarityLCSS(stepsP2, stepsP1, sp_matrix01, hu_matrix, maxDiffSteps, beta, alfa)
         print("\tSim_2: {} \n\t\tTime: {:.6f} secs\t- {:.6f} mins".format(sim_2, diff_secs, diff_mins))
         if required_parameters['timeInFile']:
@@ -321,13 +316,13 @@ def calculateSimilarities(pat1, pat2,  stepsP1, stepsP2,  sp_matrix01, hu_matrix
     elif simFunction == 'lcss_2' and df_lcss_2 is not None:
         maxStep = getMaxStep(stepsP1, stepsP2)
         # SIMILARITY 1
-        matrixes['matrixLCSS_2'] = [[None for x in range(maxStep)] for y in range(maxStep)]
+        matrixes_opt['matrixLCSS_2'] = [[None for x in range(maxStep)] for y in range(maxStep)]
         sim_1, diff_secs, diff_mins = getSimilarityLCSS_WTW(stepsP1, stepsP2, sp_matrix01, hu_matrix, maxDiffSteps, beta, alfa, stepsP1, stepsP2, margin)
         print("\tSim_1: {} \n\t\tTime: {:.6f} secs\t- {:.6f} mins".format(sim_1, diff_secs, diff_mins))
         if required_parameters['timeInFile']:
             file.write("{}_{}: {:.6f} secs\t- {:.6f} mins\n".format(pat1, pat2, diff_secs, diff_mins))
         # SIMILARITY 2
-        matrixes['matrixLCSS_2'] = [[None for x in range(maxStep)] for y in range(maxStep)]
+        matrixes_opt['matrixLCSS_2'] = [[None for x in range(maxStep)] for y in range(maxStep)]
         sim_2, diff_secs, diff_mins = getSimilarityLCSS_WTW(stepsP2, stepsP1, sp_matrix01, hu_matrix, maxDiffSteps, beta, alfa, stepsP2, stepsP1, margin)
         print("\tSim_2: {} \n\t\tme: {:.6f} secs\t- {:.6f} mins".format(sim_2, diff_secs, diff_mins))
         if required_parameters['timeInFile']:
