@@ -10,17 +10,6 @@ from config import *
 
 
 
-##########
-# PARAMS #
-##########
-
-repository = required_parameters['repository']
-maxDaysTrajForward = 7
-beta = 0.5
-alfa = 0.5
-
-
-
 ##################
 # MAIN NUM CASES #
 ##################
@@ -28,7 +17,7 @@ alfa = 0.5
 def main_numCases():
     # DRIVER
     driver = DriverGraphDB()
-    driver.setRepository(repository)
+    driver.setRepository(required_parameters['repository'])
 
     maxDate = getLastDate(driver)
     minDate = getFirstDate(driver)
