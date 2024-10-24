@@ -24,9 +24,9 @@ def lcss(stepsP1, stepsP2, sp_matrix, hu_matrix, maxDiffSteps, beta, alfa):
     step2_step = headP2[0]
 
     # Optimizacion
-    if matrixes['matrixLCSS'][step1_step][step2_step] is not None:
+    if matrixes_opt['matrixLCSS'][step1_step][step2_step] is not None:
         #print("{}_{}: Not None".format(step1_step, step2_step))
-        result = matrixes['matrixLCSS'][step1_step][step2_step]
+        result = matrixes_opt['matrixLCSS'][step1_step][step2_step]
         return result[0], result[1]
     #print("{}_{}: None".format(step1_step, step2_step))
 
@@ -46,7 +46,7 @@ def lcss(stepsP1, stepsP2, sp_matrix, hu_matrix, maxDiffSteps, beta, alfa):
         nMatches = nMatches_rec + 1
         # Optimizacion
         result = (nMatches, similarity)
-        matrixes['matrixLCSS'][step1_step][step2_step] = result
+        matrixes_opt['matrixLCSS'][step1_step][step2_step] = result
         #print("{}_{}: ({}, {})".format(step1_step, step2_step, nMatches, similarity))
         return nMatches, similarity
     
@@ -89,7 +89,7 @@ def lcss(stepsP1, stepsP2, sp_matrix, hu_matrix, maxDiffSteps, beta, alfa):
 
     # Optimizacion
     result = (nMatches,similarity)
-    matrixes['matrixLCSS'][step1_step][step2_step] = result
+    matrixes_opt['matrixLCSS'][step1_step][step2_step] = result
     #print("{}_{}: ({}, {})".format(step1_step, step2_step, nMatches, similarity))
     return nMatches, similarity
 
