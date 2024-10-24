@@ -48,7 +48,29 @@ The file [**main_NumCases.py**](https://github.com/LorenaPujante/STeMECH/blob/ma
 
 ## 5. Configuration params
 The parameters for STeMECH are the following:
-
-
+- **zero**: It indicates if it is necessary to ask the database for the matrixes to calculate the spatial distance. If _False_, they must be stored in _Code/matrixes_.
+- **repository**: The name of the GraphDB repository with the input dataset.
+- **dateStart**: The date and time to start searching for patients with a positive _TestMicro_ for a specific _Microorganism_.
+- **dateEmd**: The date and time to stop the search for patients with a positive _TestMicro_ for a specific _Microorganism_.
+- **idLoc**: Value for the _id_ attribute of the _Floor_ where to search the infected patients.
+- **idMicroorg**: The value for the _id_ attribute of the _Microorganism_ whose infected patients we are searching.
+- **maxDaysTrajForward**: When we already have found the patients infected during a period, we will also search for other events of these patients, at most, during the indicated days.
+- **similarityFunctions**: The _ids_ of the _Trajectory similarity measurement_ algorithms to be run. The allow values are:
+  - _dtw_: for Dynamic Time Warping (DTW).
+  - _dtw_st_: for Spatiotemporal DTW (ST-DTW).
+  - _lcss_: for Spatiotemporal Longest Common Subsequence (ST-LCSS).
+  - _lcss_2_: for ST-LCSS With Time Window (ST-LCSS-WTW).
+  - _tsJoin_: for Spatiotemporal Linear Combine (STLC).
+  - _tsJoin_2_: for Joint Spatiotemporal Linear Combine (JSTLC).    
+- **beta**: The β parameter of the equation for _temporal similarity_ between sampling points.
+- **alfa**: The α parameter of the equation for the _spatiotemporal similarity_ between sampling points.
+- **maxStepsBackwardLCSS**: For the _LCSS_ and _LCSS_WTW_ algorithms, the maximum allowed number of difference between two steps. If the distance in steps is bigger than this value, there won't be a match between the sampling points.
+- **margin**: For the _LCSS_WTW_ algorithm, the number of steps with which we do the match check forward and backwards.
+- **nameFolder_Matrix**: The path to the folder where to store the matrixes to calculate the spatial similarity.
+- **nameFolder_Matrix**: The path to the folder where to store the matrixes to calculate the spatial similarity.
+- **nameFolder_Matrix**: The path to the folder where to store the matrixes to calculate the spatial similarity.
+- **nameFolder_Matrix**: The path to the folder where to store the matrixes to calculate the spatial similarity.
+- **timeInFile**: 
+- **nameFolder_Matrix**: The path to the folder where to store the matrixes to calculate the spatial similarity.
 ## 6. Output
 TODO
