@@ -35,7 +35,7 @@ def heatmapAllSimilarities(arrayDataframes_01):
             
             j += 1
 
-            visualizationOfHeatMapBtwPatients(simMethod, sims_numpy, patients, required_parameters['annotated'])
+            visualizationOfHeatMapBtwPatients(simMethod, sims_numpy, patients, required_parameters_heatmap['annotated'])
 
 
 ############################################################################################################################        
