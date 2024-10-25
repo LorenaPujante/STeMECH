@@ -30,7 +30,8 @@ required_parameters = {
 }
 
 required_parameters_heatmap = {
-    'annotated': True
+    'annotated': True,
+    'heatColors': "RdYlBu_r"
 }
 
 required_parameters_clustering = {
@@ -38,6 +39,7 @@ required_parameters_clustering = {
     'numRows': 4,
     'meshSize': 0.02,
     'Ks': [3,3, 3,3, 3,3],
+    'reducedColors': "Set3",
     'barColors':  ['mediumturquoise', 'lightseagreen',  'salmon', 'tomato',  'cornflowerblue', 'royalblue'] # ['royalblue']
 }
 
