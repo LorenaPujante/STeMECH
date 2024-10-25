@@ -77,11 +77,13 @@ Here there are the parameters for the execution of, mainly, _main.py_ but also t
 
 Here there are the parameters for some of the _main_ files.
 - **annotated**: This parameter is only used in _main_Heatmap.py_. If it is _True_, the heatmaps with the trajectory similarities between patients will also show in each cell the value of the trajectory similarity between the pair of patients.
+- **heatColors**: This parameter is only used in _main_Heatmap.py_. The name of the [colour scheme](https://matplotlib.org/stable/users/explain/colors/colormaps.html) for the heatmaps.
 - **maxClustersPats**: This parameter is only used in _main_Clustering_Ks.py_. If it is _True_, when searching for the best value of _K_ for the K-Means clustering algorithm, the tested _Ks_ will be in the range [2, *_*numPatients-1_**]. If it is _False_, the _Ks_ will be in the range [2, **_numPatients/2_**].
 - **numRows**: This parameter is used in _main_Clustering_Ks.py_ and _main_Clustering_Plots.py_. It determines how many rows will have the image that shows the bar charts of the clustering metrics for each value of _K_ or trajectory similarity algorithm.
 - **meshSize**: This parameter is only used in _main_Clustering_Plots.py_. It determines the "definition" of the chart showing the points of each cluster in a bi-dimensional chart.
 - **Ks**: This parameter is only used in _main_Clustering_Plots.py_. It is an array that for each trajectory similarity measurement algorithm saves which value of _K_ returns the clusters with the optimum cohesion and separation. It must be the same size as _similarityFunctions_ and follow its order.
-- **barColors**: This parameter is only used in _main_Clustering_Plots.py_. It is an array with the colors for the bars of the charts that show the clustering metrics for each trajectory similarity algorithm.
+- **reducedColors**: This parameter is only used in _main_Clustering_Plots.py_. The name of the [colour scheme](https://matplotlib.org/stable/users/explain/colors/colormaps.html) for the bi-dimensional representation of the clusters. 
+-  **barColors**: This parameter is only used in _main_Clustering_Plots.py_. It is an array with the name of the colours for the bars of the charts that show the clustering metrics for each trajectory similarity algorithm.
 
 In the file [PARAMS.md](https://github.com/LorenaPujante/STeMECH/blob/main/PARAMS.md) we present the values for all these parameters used to create the dataset for the work [~~doi: TODO~~](NULL).
 
