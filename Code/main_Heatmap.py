@@ -10,8 +10,6 @@ def main():
     # READ DATA
     arrayDataframes = []
     for simMethod in required_parameters['similarityFunctions']:
-        simMethod = 'tsJoin'
-
         df = readCSVToSimilarityMatrix_df(simMethod)
         arrayDataframes.append(df)
 
