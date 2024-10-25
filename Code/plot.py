@@ -261,7 +261,7 @@ def plotterClustersReducedData(reduced_data, centroids, Z, xx, yy, x_min, x_max,
         Z,
         interpolation="nearest",
         extent=(xx.min(), xx.max(), yy.min(), yy.max()),
-        cmap=plt.cm.Paired,
+        cmap=required_parameters_clustering["reducedColors"],
         aspect="auto",
         origin="lower",
     )
@@ -313,7 +313,7 @@ def plotterClustersReducedData(reduced_data, centroids, Z, xx, yy, x_min, x_max,
 ###########
 
 def visualizationOfHeatMapBtwPatients(simMethod, data, patients, annotated):
-    fig = plt.figure(figsize=(8, 7))
+    fig = plt.figure(figsize=(12, 11))
 
     title = getSimilarityMethodName_Long(simMethod)
 
@@ -335,7 +335,7 @@ def plotterHeatmap(data, row_labels, col_labels, simMethod, ax=None, cbarlabel="
         ax = plt.gca()
 
     # Plot the heatmap
-    im = ax.imshow(data, cmap="RdYlBu_r")   # cmap: Esquema de color (https://matplotlib.org/stable/users/explain/colors/colormaps.html)
+    im = ax.imshow(data, cmap=required_parameters_heatmap['heatColors'])   # cmap: Esquema de color (https://matplotlib.org/stable/users/explain/colors/colormaps.html)
 
     # Create colorbar
     cbar = ax.figure.colorbar(im, ax=ax)
@@ -354,10 +354,10 @@ def plotterHeatmap(data, row_labels, col_labels, simMethod, ax=None, cbarlabel="
 
     plt.title("({}) Heatmap of similarities between patients' trajectories\n".format(getSimilarityMethodName_Short(simMethod)), fontsize=18)
 
-    plt.subplots_adjust(left=0.2,
+    plt.subplots_adjust(left=0.1,
                     right=0.95,
                     bottom=0.1, 
-                    top=0.85,
+                    top=0.95,
                     )
 
     return im, cbar
