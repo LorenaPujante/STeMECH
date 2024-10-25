@@ -18,8 +18,10 @@
 - **nameFolder_Time**: './time'
 - **normalice01**: True
 - **annotated**: True
+- **heatColors**: 'RdYlBu_r'
 - **maxClustersPats**: True
 - **numRows**: 4
 - **meshSize**: 0.02
 - **Ks**: [3,3, 3,3, 3,3]
+- **reducedColors**: 'Set3'
 - **barColors**:  ['mediumturquoise', 'lightseagreen',  'salmon', 'tomato',  'cornflowerblue', 'royalblue']
