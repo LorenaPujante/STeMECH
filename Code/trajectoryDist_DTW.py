@@ -4,9 +4,11 @@ from config import *
 
 def dtw(stepsP1, stepsP2, sp_matrix, hu_matrix):
     
-    # Caso base     # Se reduce a uno solo
+    # Base cases   
+    if len(stepsP1)==0 and len(stepsP2)==0:
+        return [0,0]    
     if len(stepsP1)==0 or len(stepsP2)==0:
-        return 0    # Nada de similitud
+        return [999999,0]
     
     # Recursivo
     #  sim(Head(P1), Head(P2)) + max {
@@ -28,15 +30,26 @@ def dtw(stepsP1, stepsP2, sp_matrix, hu_matrix):
         return matrixes_opt['matrixDTW'][step1][step2]
     
     sim_HeadP1_HeadP2 = getSpatialSimilarity(ev1, ev2, sp_matrix, hu_matrix)
-    
-    sim_P1_RestP2 = dtw(stepsP1, restP2, sp_matrix, hu_matrix)      # Option 1
-    sim_RestP1_P2 = dtw(restP1, stepsP2, sp_matrix, hu_matrix)      # Option 2
-    sim_RestP1_RestP2 = dtw(restP1, restP2, sp_matrix, hu_matrix)   # Option 3
-    listSimilarities = [sim_P1_RestP2, sim_RestP1_P2, sim_RestP1_RestP2]
-    maxSimilarity = max(listSimilarities)
+    dist_HeadP1_HeadP2 = getSpatialDistance(ev1, ev2, sp_matrix, hu_matrix)
 
-    similarity = sim_HeadP1_HeadP2 + maxSimilarity
-    # Optimizacion
-    matrixes_opt['matrixDTW'][step1][step2] = similarity
+    res_P1_RestP2 = dtw(stepsP1, restP2, sp_matrix, hu_matrix)      # Option 1
+    res_RestP1_P2 = dtw(restP1, stepsP2, sp_matrix, hu_matrix)      # Option 2
+    res_RestP1_RestP2 = dtw(restP1, restP2, sp_matrix, hu_matrix)   # Option 3
     
-    return similarity
+    listResults = [res_P1_RestP2, res_RestP1_P2, res_RestP1_RestP2]
+    minDist = 9999999999
+    maxSim = 0
+    for r in listResults:
+        if r[0]<minDist:
+            minDist = r[0]
+            maxSim = r[1]
+        elif r[0]==minDist:
+            if r[1] > maxSim:
+                maxSim = r[1]
+    distance = dist_HeadP1_HeadP2 + minDist
+    similarity = sim_HeadP1_HeadP2 + maxSim
+    
+    # Optimizacion
+    matrixes_opt['matrixDTW'][step1][step2] = [distance, similarity]
+    
+    return [distance, similarity]
