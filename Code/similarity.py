@@ -63,7 +63,7 @@ def calculateTrajectoriesSimilarity(dicTrajectories, dicPatTMStep, sp_matrix01, 
                     dicPat1_Pat2_TrajectoryShort[key] = None
                 else:
                     newTraj1, newTraj2 = setSameLengthToTrajectories(dicTrajectories, dicPatTMStep, pat1, pat2)
-                    print("\n\nTRAJECTORY PATIENTS: {} - {}".format(pat1, pat2))
+                    print("\n\nTRAJECTORY PATIENTS: {} - {} ({} to {})".format(pat1, pat2, newTraj1[0][0],newTraj1[len(newTraj1)-1][0]))
                     if newTraj1 is None or newTraj2 is None:
                         print(" - None trajectory")
                         dicPat1_Pat2_TrajectoryShort[key] = None
