@@ -274,8 +274,8 @@ def calculateSimilarities(pat1, pat2,  stepsP1, stepsP2,  sp_matrix01, hu_matrix
             file.write("{}_{}: {:.6f} secs\t- {:.6f} mins\n".format(pat2, pat1, diff_secs, diff_mins))
         
 
-        df_dtw[pat1][pat2] = sim_1
-        df_dtw[pat2][pat1] = sim_2
+        df_dtw[pat1][pat2] = sim_1[1]
+        df_dtw[pat2][pat1] = sim_2[1]
     
     elif simFunction == 'dtw_st' and df_dtw_st is not None:
         maxStep = getMaxStep(stepsP1, stepsP2)
@@ -292,8 +292,8 @@ def calculateSimilarities(pat1, pat2,  stepsP1, stepsP2,  sp_matrix01, hu_matrix
         if required_parameters['timeInFile']:
             file.write("{}_{}: {:.6f} secs\t- {:.6f} mins\n".format(pat2, pat1, diff_secs, diff_mins))
 
-        df_dtw_st[pat1][pat2] = sim_1
-        df_dtw_st[pat2][pat1] = sim_2
+        df_dtw_st[pat1][pat2] = sim_1[1]
+        df_dtw_st[pat2][pat1] = sim_2[1]
     
     elif simFunction == 'lcss' and df_lcss is not None:
         maxStep = getMaxStep(stepsP1, stepsP2)
