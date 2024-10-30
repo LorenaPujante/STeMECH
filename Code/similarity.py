@@ -480,15 +480,36 @@ def getMaxSimilarityToNormalice(simMethod, sp_matrix01, maxNSteps):
         sp_matrix01_list = list(set(sp_matrix01_list))
         sp_matrix01_list.sort()
         
-        minSpDist = sp_matrix01_list[1]
-        minSpDist *= 0.5    # Same HU
-        
-        maxSpSim = getSpatialSimilarity_distKnown(minSpDist)
-        maxTmpSim = getTemporalSimilarity_distKnown(0, required_parameters['beta'])
-        
-        maxSim = getSimilarity_simsKnown(maxSpSim, maxTmpSim, required_parameters['alfa'])
-        
-        maxSimTraj = maxSim * maxNSteps
-        
-        return maxSimTraj
+        if simMethod == 'dtw': 
+            minSpDist = sp_matrix01_list[0]
+            minSpDist *= 0.5    # Same HU
+            maxSpSim = getSpatialSimilarity_distKnown(minSpDist)
+            maxSimTraj = maxSpSim * maxNSteps 
+
+            return maxSimTraj
+        else:
+            # MaxSim1 = Estar en dos camas vecinas en el mismo step
+            minSpDist_1 = sp_matrix01_list[1]
+            maxSpSim_1 = getSpatialSimilarity_distKnown(minSpDist_1)
+
+            maxTmpSim_1 = getTemporalSimilarity_distKnown(0, required_parameters['beta'])
+
+            maxSim_1 = getSimilarity_simsKnown(maxSpSim_1, maxTmpSim_1, required_parameters['alfa'])
+            maxSimTraj_1 = maxSim_1 * maxNSteps
+
+            # MaxSim2 = Estar en la misma cama en dos steps contiguos
+            minSpDist_2 = sp_matrix01_list[0]
+            maxSpSim_2 = getSpatialSimilarity_distKnown(minSpDist_2)
+            minTmpDist_2 = getTemporalDistance_diffKnown(1, maxNSteps)
+            maxTmpSim_2 = getTemporalSimilarity_distKnown(minTmpDist_2, required_parameters['beta'])
+
+            maxSim_2 = getSimilarity_simsKnown(maxSpSim_2, maxTmpSim_2, required_parameters['alfa'])
+            maxSimTraj_2 = maxSim_2 * maxNSteps
+
+            if maxSimTraj_1 > maxSimTraj_2:
+                return maxSimTraj_1
+            else:
+                return maxSimTraj_2
+  
     return 2
+
