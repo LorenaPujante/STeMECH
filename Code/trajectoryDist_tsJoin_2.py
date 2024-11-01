@@ -1,9 +1,9 @@
-import math
-
 from similarityCalculator import *
-
+from config import *
 
 def tsJoin_2(stepsP1, stepsP2, sp_matrix, hu_matrix, maxDiffSteps, beta, alfa):
+    maxDiffSteps += 1
+    
     sim1 = getSpatioTemporalDistance_tsJoin(stepsP1, stepsP2, sp_matrix, hu_matrix, maxDiffSteps, beta, alfa)
     sim2 = getSpatioTemporalDistance_tsJoin(stepsP2, stepsP1, sp_matrix, hu_matrix, maxDiffSteps, beta, alfa)
     similarity = sim1 + sim2
@@ -25,6 +25,9 @@ def getSpatioTemporalDistance_tsJoin(stepsP1, stepsP2, sp_matrix, hu_matrix, max
 
         totalSimilarity += maxSimilarity
 
-    totalSimilarity /= len(stepsP1)
+    if required_parameters['maxDiffStepsSTLC']:
+        totalSimilarity /= maxDiffSteps
+    else:
+        totalSimilarity /= len(stepsP1)
 
     return totalSimilarity
