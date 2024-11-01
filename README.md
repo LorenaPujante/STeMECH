@@ -68,6 +68,7 @@ Here there are the parameters for the execution of, mainly, _main.py_ but also t
 - **alfa**: The α parameter of the equation for the _spatiotemporal similarity_ between sampling points.
 - **maxStepsBackwardLCSS**: For the _LCSS_ and _LCSS_WTW_ algorithms, the maximum allowed number of difference between two steps. If the distance in steps is bigger than this value, there won't be a match between the sampling points.
 - **margin**: For the _LCSS_WTW_ algorithm, the number of steps with which we do the match check forward and backwards.
+- **maxDiffStepsSTLC**: For the _STLC_ and _JSTLC_ algorithms, if it is _True_, the temporal and spatial similarities will be divided between the number of steps of our search time. If it is False, they will be divided (as the original STLC) between the number of steps of the compared trajectories.
 - **nameFolder_Matrix**: The path to the folder where to save the matrixes to calculate the spatial similarity. They are saved in CSV files. The headers of the matrixes (the id of the locations) are saved in this folder.   
 - **nameFolder_SimArrays**: The path to the folder where to save the similarity matrixes between patients' trajectories. They are saved in CSV files. The result of each algorithm is saved in a separate file. The arrays with the similarities normalised to range [0,1] are also saved here with the name ending with "__01_".
 - **nameFolder_Figures**: The path to the folder where to save the figures with the resume of the results of all the _main_ files.
