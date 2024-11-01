@@ -1,15 +1,16 @@
 - **zero**: False                  
 - **repository**: "nameRepository"
-- **dateStart**: "2024-03-01T00:00:00"    # TODO
-- **dateEnd**: "2024-03-13T23:59:59"      # TODO
-- **idLoc**: 1306                # TODO   
-- **idMicroorg**: 1434
-- **maxDaysTrajForward**: 7      # TODO
-- **similarityFunctions**: ['tsJoin', 'tsJoin_2',  'dtw', 'dtw_st', 'lcss', 'lcss_2']
+- **dateStart**: "2024-03-02T00:00:00"
+- **dateEnd**: "2024-03-06T23:59:59"
+- **idLoc**: 1340                # Floor 2   
+- **idMicroorg**: 1436
+- **maxDaysTrajForward**: 3      # Median Incubation Period of C. difficile = 2-3 days
+- **similarityFunctions**: ['dtw', 'dtw_st', 'lcss', 'lcss_2', 'tsJoin', 'tsJoin_2']
 - **beta**: 0.45
 - **alfa**: 0.5
-- **maxStepsBackwardLCSS**: 5    # TODO
+- **maxStepsBackwardLCSS**: 5    # Median Incubation Period of C. difficile = 2-3 days  -> 2*3-1=6-1=5 (the maximum difference between 2 steps from two days with one day in between is 5) 
 - **margin**: 5
+- **maxDiffStepsSTLC**: True
 - **nameFolder_Matrix**: './matrixes'
 - **nameFolder_SimArrays**: './similarityArrays'
 - **nameFolder_Figures**: './figures'
