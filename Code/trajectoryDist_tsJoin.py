@@ -1,13 +1,15 @@
 
 from similarityCalculator import *
+from config import *
 
 
 
 def tsJoin(stepsP1, stepsP2, sp_matrix, hu_matrix, maxDiffSteps, beta, alfa):
-    
+    maxDiffSteps += 1
+
     # SPATIAL DISTANCE
-    spSim1 = getSpatialSimilarity_tsJoin(stepsP1, stepsP2, sp_matrix, hu_matrix)
-    spSim2 = getSpatialSimilarity_tsJoin(stepsP2, stepsP1, sp_matrix, hu_matrix)
+    spSim1 = getSpatialSimilarity_tsJoin_basic(stepsP1, stepsP2, sp_matrix, hu_matrix, maxDiffSteps)
+    spSim2 = getSpatialSimilarity_tsJoin_basic(stepsP2, stepsP1, sp_matrix, hu_matrix, maxDiffSteps)
     spSimilarity = spSim1 + spSim2
 
     # TEMPORAL DISTANCE
@@ -25,7 +27,7 @@ def tsJoin(stepsP1, stepsP2, sp_matrix, hu_matrix, maxDiffSteps, beta, alfa):
 # SIMILITUD ESPACIAL #
 ######################
 
-def getSpatialSimilarity_tsJoin(stepsP1, stepsP2, sp_matrix, hu_matrix):
+def getSpatialSimilarity_tsJoin(stepsP1, stepsP2, sp_matrix, hu_matrix, maxDiffSteps):
 
     totalSimilarity = 0
     dicBedHU_1_tested = {}   # Para guardar la maxima similitud de un par (Bed, HU)
@@ -64,12 +66,16 @@ def getSpatialSimilarity_tsJoin(stepsP1, stepsP2, sp_matrix, hu_matrix):
         
         totalSimilarity += maxSimilarity
 
-    totalSimilarity /= len(stepsP1) # Se diviede entre el numero de steps de la trayectoria 1
+
+    if required_parameters['maxDiffStepsSTLC']:
+        totalSimilarity /= maxDiffSteps
+    else:
+        totalSimilarity /= len(stepsP1) # Se diviede entre el numero de steps de la trayectoria 1
     
     return totalSimilarity
 
 
-def getSpatialSimilarity_tsJoin_basic(stepsP1, stepsP2, sp_matrix, hu_matrix):
+def getSpatialSimilarity_tsJoin_basic(stepsP1, stepsP2, sp_matrix, hu_matrix, maxDiffSteps):
 
     totalSimilarity = 0
 
@@ -85,7 +91,10 @@ def getSpatialSimilarity_tsJoin_basic(stepsP1, stepsP2, sp_matrix, hu_matrix):
                 
         totalSimilarity += maxSimilarity
 
-    totalSimilarity /= len(stepsP1) # Se diviede entre el numero de steps de la trayectoria 1
+    if required_parameters['maxDiffStepsSTLC']:
+        totalSimilarity /= maxDiffSteps
+    else:
+        totalSimilarity /= len(stepsP1) # Se diviede entre el numero de steps de la trayectoria 1
 
     return totalSimilarity
 
@@ -111,7 +120,10 @@ def getTemporalSimilarity_tsJoin(stepsP1, stepsP2, maxDiffSteps, beta):
                 
         totalSimilarity += maxSimilarity
 
-    totalSimilarity /= len(stepsP1) # Se diviede entre el numero de steps de la trayectoria 1
+    if required_parameters['maxDiffStepsSTLC']:
+        totalSimilarity /= maxDiffSteps
+    else:
+        totalSimilarity /= len(stepsP1) # Se diviede entre el numero de steps de la trayectoria 1
 
     return totalSimilarity
 
