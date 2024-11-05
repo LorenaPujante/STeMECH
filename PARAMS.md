@@ -10,6 +10,7 @@
 - **alfa**: 0.5
 - **maxStepsBackwardLCSS**: 5    # Median Incubation Period of C. difficile = 2-3 days  -> 2*3-1=6-1=5 (the maximum difference between 2 steps from two days with one day in between is 5) 
 - **margin**: 5
+- **maxSpDist**: 40/94 or 55/94  # 40 = Maximum Distance (using shortest path algorithm) between 2 Beds from the same LogicZone     # 55 = Same but 2 Beds from the same Floor         # 94 = Same but 2 Beds from the same building (this is the max distance between two beds in the dataset)
 - **maxDiffStepsSTLC**: True
 - **nameFolder_Matrix**: './matrixes'
 - **nameFolder_SimArrays**: './similarityArrays'
