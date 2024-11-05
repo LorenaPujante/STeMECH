@@ -9,7 +9,7 @@ def lcss(stepsP1, stepsP2, sp_matrix, hu_matrix, maxDiffSteps, beta, alfa):
     if len(stepsP1)==0 or len(stepsP2)==0:
         return 0, 0
     
-    minSpatialSim = getSpatialSimilarity_distKnown(39.5/102.5)         # DEFINICION DE BROTE   # Distancia hasta Area -> Zona Lógica           # 39.5 = Distancia Bed-LZ-Bed   # 102.5 = Valor máximo en la Matriz de Locations
+    minSpatialSim = getSpatialSimilarity_distKnown(required_parameters['maxSpDist'])
     maxTempDist = getTemporalDistance_diffKnown(required_parameters['maxStepsBackwardLCSS'], maxDiffSteps)
     minTemporalSim = getTemporalSimilarity_distKnown(maxTempDist, beta)
                                 
