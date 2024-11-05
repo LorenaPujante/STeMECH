@@ -18,6 +18,8 @@ required_parameters = {
     'alfa': 0.5,
     'maxStepsBackwardLCSS': 5,  # DEFINICION DE BROTE   # 1 Día = 3 steps -> Dos Eventos están en el mismo día cuando la diferencia es, como máximo, 2. 
     'margin': 5,
+    'maxSpDist': 40/94,  # DEFINICION DE BROTE   # Distancia hasta Area -> Zona Lógica           # 40 = Distancia Bed-LZ-Bed     # 55 = Distancia Bed-Floor-Bed         # 94 = Valor máximo en la Matriz de Locations
+    'maxDiffStepsSTLC': True,
     # Folders
     'nameFolder_Matrix': './matrixes',
     'nameFolder_SimArrays': './similarityArrays',
