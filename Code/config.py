@@ -6,19 +6,19 @@
 required_parameters = {
     # Graph and trajectories
     'zero': False,                  
-    'repository': "Test3",    # TODO
-    'dateStart': "2024-03-01T00:00:00",#"2024-03-12T00:00:00", #"2024-01-13T00:00:00" #Test2,     # "2023-01-06T00:00:00",    # Para Test1
-    'dateEnd': "2024-03-13T23:59:59", #"2024-01-19T23:59:59" #Test2,       # "2023-01-12T23:59:59",    # Para Test1
-    'idLoc': 1306, #1339 #Test2,      # "1335",  # Para Test1   
-    'idMicroorg': 1434, #1435 #Test2,     #" 1429",   # Para Test1
-    'maxDaysTrajForward': 7,#7, 
+    'repository': "YourRepositoryName",    # TODO
+    'dateStart': "2024-03-02T00:00:00",
+    'dateEnd': "2024-03-06T23:59:59",
+    'idLoc': 1340,  
+    'idMicroorg': 1436, 
+    'maxDaysTrajForward': 3,
     # Similarity methods
-    'similarityFunctions': ['tsJoin', 'tsJoin_2',  'dtw', 'dtw_st', 'lcss', 'lcss_2'],
+    'similarityFunctions': ['dtw', 'dtw_st', 'lcss', 'lcss_2, 'tsJoin', 'tsJoin_2'],
     'beta': 0.45,
     'alfa': 0.5,
-    'maxStepsBackwardLCSS': 5,  # DEFINICION DE BROTE   # 1 Día = 3 steps -> Dos Eventos están en el mismo día cuando la diferencia es, como máximo, 2. 
+    'maxStepsBackwardLCSS': 5,   
     'margin': 5,
-    'maxSpDist': 40/94,  # DEFINICION DE BROTE   # Distancia hasta Area -> Zona Lógica           # 40 = Distancia Bed-LZ-Bed     # 55 = Distancia Bed-Floor-Bed         # 94 = Valor máximo en la Matriz de Locations
+    'maxSpDist': 40/94, 
     'maxDiffStepsSTLC': True,
     # Folders
     'nameFolder_Matrix': './matrixes',
@@ -41,8 +41,8 @@ required_parameters_clustering = {
     'numRows': 4,
     'meshSize': 0.02,
     'Ks': [3,3, 3,3, 3,3],
-    'reducedColors': "Set3",
-    'barColors':  ['mediumturquoise', 'lightseagreen',  'salmon', 'tomato',  'cornflowerblue', 'royalblue'] # ['royalblue']
+    'reducedColors': "gist_rainbow",
+    'barColors':  ['mediumturquoise', 'lightseagreen',  'salmon', 'tomato',  'cornflowerblue', 'royalblue']
 }
 
 
