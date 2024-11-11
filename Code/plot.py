@@ -2,10 +2,9 @@
 import math
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
 import matplotlib.ticker as tck
+from matplotlib import colormaps
 from sklearn.decomposition import PCA
-from sklearn.cluster import KMeans
 
 from config import *
 
@@ -52,6 +51,54 @@ def visualizationValidationScores(validationScores, minClusters, maxClusters, nu
     #plt.clf()   # Borra la figura
     
     return 0
+
+
+def visualizationValidationScores_sil(pairSilhouette, minClusters, maxClusters, similarityMethod):
+
+    # Get number of k's
+    ks = []
+    for i in range(minClusters, maxClusters+1):
+        ks.append(i)
+    
+    plt.figure(figsize=(8,5))
+    title = getSimilarityMethodName_Long(similarityMethod)
+    dataX = ks
+    dataY = pairSilhouette[1]
+
+    plt.plot(dataX, dataY,
+                  color='darkcyan',
+                  linewidth=1.5, 
+                  marker='.', markersize=10)
+    
+    plt.title(title, fontweight='bold', fontsize=11)
+    
+    plt.grid(True)
+
+    # Para que en todos los subplots la leyenda del eje X (abajo) sean las k's
+    plt.xlabel('k', fontsize=10, style= "italic", color='dimgrey', loc='right')
+    plt.xticks(dataX, fontsize=11)
+    plt.yticks(fontsize=11)
+    
+    # Margenes
+    plt.subplots_adjust(left=0.1,
+                    right=0.95,
+                    bottom=0.1, 
+                    top=0.82,
+                    hspace=0.6)  
+
+    textTitle = "Validation scores"
+    if similarityMethod is not None:
+        textTitle += " - {}".format(similarityMethod)
+    plt.suptitle(textTitle, fontsize=20, bbox={'facecolor': 'aliceblue', 'pad':5})
+    
+
+    nameFile = "./figure_SilhouetteScores"
+    if similarityMethod is not None:
+        nameFile += "_{}".format(getSimilarityMethodName_Short(similarityMethod))
+    nameFile += ".png"
+    plt.savefig(required_parameters['nameFolder_Figures'] + nameFile)
+    plt.show()
+    
 
 
 #--------------------#
@@ -147,6 +194,53 @@ def visualizationValidationScores_bis(validationScores, numRows):
     plt.show()
 
 
+def visualizationValidationScores_bis_sil(pairSilhouette, numRows):
+    simMethods = []
+    for sm in required_parameters['similarityFunctions']:
+        simMethods.append(getSimilarityMethodName_Short(sm))
+    
+    barLabels = []
+    for value in pairSilhouette[1]:
+        value_round = round(value, 2)
+        barLabels.append(value_round)
+
+    dataX = simMethods 
+    dataY = barLabels
+
+    plt.figure(figsize=(8,5))
+    out = plt.bar(dataX, dataY,
+                    color=required_parameters_clustering['barColors'],
+                    width=0.8,
+                    label=barLabels)
+        
+    plt.bar_label(out, labels=barLabels, label_type='edge', padding=1)
+        
+    # Para aumentar un poco el eje Y
+    plt.ylim(-1.1, 1.1)
+        
+    plt.tight_layout()
+
+    plt.title(pairSilhouette[0], fontweight='bold', fontsize=11)
+
+    plt.grid(axis='y')
+    plt.xlabel('Similarity method', fontsize=10, style= "italic", color='dimgrey', loc='right')
+
+    plt.yticks(fontsize=11)
+    plt.xticks(fontsize=11)
+
+    # Margenes
+    plt.subplots_adjust(left=0.1,
+                    right=0.95,
+                    bottom=0.1, 
+                    top=0.9,
+                    hspace=0.6) 
+
+    nameFile = required_parameters['nameFolder_Figures'] + "./figure_SimMethods_SilhouetteScores.png"
+    plt.savefig(nameFile)
+    plt.show()
+
+
+
 #--------------------#
 # AUXILIAR FUNCTIONS #
 #--------------------#
@@ -210,102 +304,111 @@ def plotterValidationScores_bis(ax, fig, dataX, dataY, title, barLabels):
 # VISUALIZATION OF CHOSEN K #
 #############################
 
-def visualizationOfClusterWithReducedData(data, numClusters, h, similarityMethod):
-    reduced_data = PCA(n_components=2).fit_transform(data)
-    
-    # ELIGE EL MINIMO Y EL MAXIMO DE CADA UNA DE LAS DIMENSIONES REDUCIDAS
-    # ARRAY QUE VA DEL MIN AL MAX CON SALTOS DE TAMAÑO h
-    # LUEGO HACE UNA GRID DE TAMAÑO LEN(ARRAY(DIM_X))xLEN(ARRAY(DIM_Y)) CON LOS VALORES SACADOS DE LOS ARRAYS 'ARANGE'
-    x_min, x_max = reduced_data[:, 0].min() - 1, reduced_data[:, 0].max() + 1   # [:, 0] = Todos los valores de la primera columna
-    y_min, y_max = reduced_data[:, 1].min() - 1, reduced_data[:, 1].max() + 1
-    xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
-    
-    # Obtain labels for each point in mesh. Use last trained model.
-    kmeans = KMeans(init="k-means++", n_clusters=numClusters, n_init=4)  # Se obtienen los mismos clusters con los mismos puntos en cada cluster, solo cambia el nombre de los clusters: es posible que los puntos del cluster_1 estén en el cluster_3 de datos reducidos
-    cluster_labels_reducedData = kmeans.fit_predict(reduced_data)
-    centroids_reducedData = kmeans.cluster_centers_
+def linkPats_Clusters_Data_RedData(data, reduced_data, dictClusters_pairs):
+    pat_cluster_data_rData = []
+    for i in range(len(data)):
+        rd = reduced_data[i]
+        d = data[i]
+        pat = None
+        clustersKeys = list(dictClusters_pairs.keys())
+        found1 = False
+        j = 0
+        while j<len(clustersKeys) and not found1:
+            key = clustersKeys[j]
+            cluster = dictClusters_pairs[key]
+            found2 = False
+            k = 0
+            while k<len(cluster) and not found2:
+                patDists = cluster[k][1]
+                if (patDists == d).all():
+                    found2 = True
+                    pat = cluster[k][0]
+                else:
+                    k += 1
+            if found2:
+                found1 = True
+            else:
+                j += 1
+        dato = [pat, key, d.tolist(), rd.tolist()]
+        pat_cluster_data_rData.append(dato)
 
-    # Obtain labels for each point in mesh. Use last trained model.
-    Z = kmeans.predict(np.c_[xx.ravel(), yy.ravel()])
+    return pat_cluster_data_rData
 
-    # Put the result into a color plot
-    Z = Z.reshape(xx.shape)
+# https://scikit-learn.org/1.5/auto_examples/cluster/plot_digits_linkage.html
+def visualizationOfClusterWithReducedData(data, cluster_centroids, numClusters, dictClusters_pairs, similarityMethod):
     
-    # Show image
-    plotterClustersReducedData(reduced_data, centroids_reducedData, Z, xx, yy, x_min, x_max, y_min, y_max, numClusters, similarityMethod)
+    # Reduce data to 2 dimensions
+    data_and_centroids = np.concatenate((data, cluster_centroids))
+    pca = PCA(n_components=2)
+    data_and_centroids_red = pca.fit(data)
+    data_and_centroids_red = pca.transform(data_and_centroids)
+    reduced_data = data_and_centroids_red[:-numClusters]
+    cluster_centroids_red = data_and_centroids_red[len(data_and_centroids_red)-numClusters:]
+
+    # Link each Patient with its cluster and data
+    pat_cluster_data_rData = linkPats_Clusters_Data_RedData(data, reduced_data, dictClusters_pairs)
+
+    # Normalize reduced data to [0,1]
+    x_min, x_max = data_and_centroids_red[:, 0].min(), data_and_centroids_red[:, 0].max()
+    reduced_data_norm = (reduced_data - x_min) / (x_max - x_min)
+    cluster_centroids_red_norm = (cluster_centroids_red - x_min) / (x_max - x_min)
+    pat_cluster_data_rDataNorm = []
+    for i in range(len(pat_cluster_data_rData)):
+        dato = pat_cluster_data_rData[i]
+        datoNorm = [dato[0],dato[1],dato[2],reduced_data_norm[i]]
+        pat_cluster_data_rDataNorm.append(datoNorm)
+
+    # Figure size
+    plt.figure(figsize=(9,8))
+
+    # Plot centroids of the clusters and the legend
+    cmap = colormaps[required_parameters_clustering['reducedColors']]
+    norm = plt.Normalize(vmin=0, vmax=6)
+    for i in range(len(cluster_centroids_red_norm)):
+        cluster = i
+        centroid = cluster_centroids_red_norm[i]
+        plt.scatter(
+            centroid[0], centroid[1],
+            marker="x",
+            s=75,
+            c = cmap(norm(cluster)),
+            #edgecolors='black',
+            alpha=0.75
+        )
+    labels = np.arange(numClusters).tolist()
+    for i in range(len(labels)):
+        labels[i] = "Cluster {}".format(labels[i])
+    plt.legend(labels, bbox_to_anchor=(1.04, 1), loc='upper left')
+
+    # Plot each Patient
+    for i in range(len(pat_cluster_data_rDataNorm)):
+        cluster = pat_cluster_data_rDataNorm[i][1]
+        pat = pat_cluster_data_rDataNorm[i][0]
+        rd = pat_cluster_data_rDataNorm[i][3]
+        plt.scatter(
+            rd[0], rd[1],
+            marker="o", #marker=f"·${cluster}$",
+            s=100,
+            c = cmap(norm(cluster)),
+            edgecolors='black'
+        )
+        plt.text(
+            rd[0]+0.01, rd[1], " {}".format(pat)
+        )
+           
+    plt.xticks([])
+    plt.yticks([])
+    plt.subplots_adjust(left=0.05, right=0.8)
+
+    plt.title("{}: Clusters with K = {}\n".format(getSimilarityMethodName_Short(similarityMethod), numClusters), fontsize=18)
 
     plt.savefig(required_parameters['nameFolder_Figures'] + './figure_ClusterReducedData_k{}_{}.png'.format(numClusters, getSimilarityMethodName_Short(similarityMethod)))
     plt.show()
-    #plt.clf()
 
 
-#--------------------#
-# AUXILIAR FUNCTIONS #
-#--------------------#
-
-def correspondenciaDataReduced(data, reduced_data):
-    correspondenciaPuntos = []
-    for i in range(len(data)):
-        pair = (data[i], reduced_data[i])
-        correspondenciaPuntos.append(pair)
-
-    return correspondenciaPuntos
-
-
-def plotterClustersReducedData(reduced_data, centroids, Z, xx, yy, x_min, x_max, y_min, y_max, numClusters, similarityMethod):
-    
-    plt.figure(figsize=(8, 7))
-
-    # Para crear una imagen como un grid
-    plt.imshow(     
-        Z,
-        interpolation="nearest",
-        extent=(xx.min(), xx.max(), yy.min(), yy.max()),
-        cmap=required_parameters_clustering["reducedColors"],
-        aspect="auto",
-        origin="lower",
-    )
-    plt.plot(reduced_data[:, 0], reduced_data[:, 1], "k.", markersize=6, color=(49/255, 45/255, 140/255))#(30/255, 45/255, 125/255)
-
-    # Plot the centroids as a white X
-    centroids_x = centroids[:, 0]
-    centroids_y = centroids[:, 1]
-    plt.scatter(
-        centroids_x,
-        centroids_y,
-        marker="X",
-        s=150,
-        linewidths=1,
-        color="white",
-        zorder=10,
-    )
-    # Label for the centroids
-    for i in range(numClusters):
-        nCluster = i+1
-        plt.text(centroids_x[i], centroids_y[i], "   Cluster {}".format(nCluster), 
-                 fontsize=12, fontweight='bold', color='0.1', 
-                 zorder=20) # zorder : "Eje Z"
-        
-
-    plt.title("{}: Clusters with K = {}\n".format(getSimilarityMethodName_Short(similarityMethod), numClusters), fontsize=18)
-    
-    plt.xlim(x_min, x_max)
-    plt.ylim(y_min, y_max)
-    
-    # get rid of the frame
-    for spine in plt.gca().spines.values(): # gca() : Get the current Axes
-        spine.set_visible(False)
-    plt.xticks(())
-    plt.yticks(())
-    
-    plt.subplots_adjust(left=0.1,
-                    right=0.9,
-                    bottom=0.2, 
-                    top=0.8,
-                    hspace=0.6)
-    
 
 ###################################################################################################################################################################
+
 
 
 ###########
@@ -329,16 +432,20 @@ def visualizationOfHeatMapBtwPatients(simMethod, data, patients, annotated):
 # AUXILIAR FUNCTIONS #
 #--------------------#
 
-def plotterHeatmap(data, row_labels, col_labels, simMethod, ax=None, cbarlabel=""):
+def plotterHeatmap_orig(data, row_labels, col_labels, simMethod, ax=None, cbarlabel=""):
 
     if ax is None:
         ax = plt.gca()
 
     # Plot the heatmap
+    #cmap = mpl.cm.ScalarMappable(cmap=required_parameters_heatmap['heatColors'])
     im = ax.imshow(data, cmap=required_parameters_heatmap['heatColors'])   # cmap: Esquema de color (https://matplotlib.org/stable/users/explain/colors/colormaps.html)
 
     # Create colorbar
-    cbar = ax.figure.colorbar(im, ax=ax)
+    cbar = ax.figure.colorbar(im, ax=ax, ticks=np.arange(0, 1, 0.1))
+    #cmap.set_clim(0, 1.0)
+    #mesh = ax.pcolormesh(data, cmap = required_parameters_heatmap['heatColors'])
+    #cbar.ax.set_xlim(0,1.0) #mesh.set_clim(0,1.0)
     cbar.ax.set_ylabel(cbarlabel, rotation=-90, va="bottom", fontsize=12, style= "italic", color='dimgrey')    # cbarlabel: The label for the colorbar
 
     # Show all ticks and label them with the respective list entries.
@@ -363,18 +470,74 @@ def plotterHeatmap(data, row_labels, col_labels, simMethod, ax=None, cbarlabel="
     return im, cbar
 
 
-def plotter_AnnotateHeatmap(im):
+def plotterHeatmap(data, row_labels, col_labels, simMethod, ax=None, cbarlabel=""):
+
+    if ax is None:
+        ax = plt.gca()
+
+    # Plot the heatmap
+    im = ax.imshow(data, cmap=required_parameters_heatmap['heatColors'], vmin=0, vmax=1)   # cmap: Esquema de color (https://matplotlib.org/stable/users/explain/colors/colormaps.html)
+
+    # Create colorbar
+    cbar = ax.figure.colorbar(im, ax=ax, ticks=np.arange(0, 1.1, 0.1))
+    cbar.ax.set_ylabel(cbarlabel, rotation=-90, va="bottom", fontsize=12, style= "italic", color='dimgrey')    # cbarlabel: The label for the colorbar
+
+    # Show all ticks and label them with the respective list entries.
+    ax.set_xticks(np.arange(data.shape[1]), labels=col_labels)
+    ax.set_yticks(np.arange(data.shape[0]), labels=row_labels)
+
+    # Let the horizontal axes labeling appear on top.
+    ax.tick_params(top=True, bottom=False,
+                   labeltop=True, labelbottom=False)
+
+    # Set the alignment of tick labels
+    plt.setp(ax.get_xticklabels(), ha="center")
+
+    plt.title("({}) Heatmap of similarities between patients' trajectories\n".format(getSimilarityMethodName_Short(simMethod)), fontsize=18)
+
+    plt.subplots_adjust(left=0.1,
+                    right=0.95,
+                    bottom=0.1, 
+                    top=0.95,
+                    )
+
+    return im, cbar
+
+
+def func(x, pos):
+        if type(x) == str:
+            return x
+        return f"{x:.2f}".replace("0.", ".").replace("1.00", "")
+def plotter_AnnotateHeatmap(im, textcolors=("white", "black"), threshold=None):
 
     data = im.get_array()
     
+    # Normalize the threshold to the images color range.
+    if threshold is not None:
+        threshold = im.norm(threshold)
+    else:
+        threshold = im.norm(data.max())/3
+
+    # Set default alignment to center, but allow it to be
+    # overwritten by textkw.
+    kw = dict(horizontalalignment="center",
+              verticalalignment="center",
+              ha="center", va="center", color="w",
+              size=12)
+
     # Text formatter
-    valfmt = tck.StrMethodFormatter("{x:.2f}")  # Image's data is used
+    valfmt = tck.FuncFormatter(func) #tck.StrMethodFormatter("{x:.2f}")  # Image's data is used
 
     # Loop over the data and create a `Text` for each cell.
     texts = []
     for i in range(data.shape[0]):
         for j in range(data.shape[1]):
-            text = im.axes.text(j, i, valfmt(data[i, j], None), ha="center", va="center", color="w")
+            kw.update(color=textcolors[int(im.norm(data[i, j]) > threshold)])
+            if i==j:
+                value = "-"
+            else:
+                value = data[i,j]
+            text = im.axes.text(j, i, valfmt(value, None), kw)
             texts.append(text)
 
     return texts
