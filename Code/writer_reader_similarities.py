@@ -150,6 +150,27 @@ def writeResultsClustering_allKs(allValidationScores, minClusters, maxClusters):
     file.close()
 
 
+def writeResultsClustering_allKs_sil(allPairsSilhouette, minClusters, maxClusters):
+    nameFolder = required_parameters['nameFolder_Outputs']
+    fileName = nameFolder + '/' + "clustering_SilhouetteScores_Ks.txt"
+
+    file = open(fileName, "w")
+
+    for similarityLabel, silScores in allPairsSilhouette.items():
+        print(similarityLabel)
+        print(silScores)
+        line = "* {}\n".format(similarityLabel)
+        file.write(line)
+        numTestClusters = maxClusters-minClusters + 1
+        for i in range(numTestClusters):
+            k = i+minClusters
+            line = "   - {}: {}\n".format(k, silScores[1][i])
+            file.write(line) 
+        file.write('\n')
+
+    file.close()
+
+
 def writeResultsClustering_specificK(similarityMethod, k, dictClusters_pairs, cluster_centroids):
     nameFolder = required_parameters['nameFolder_Outputs']
     fileName = nameFolder + '/' + "clustering_{}_K{}.txt".format(getSimilarityMethodName_Short(similarityMethod), k)
