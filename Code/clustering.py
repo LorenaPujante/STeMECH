@@ -248,9 +248,10 @@ def clusteringKMeans(data, dictPatSims, numClusters, similarityMethod):
     dictClusters = getPointsInClusters(data, cluster_labels)
 
     dictClusters_pairs = getDictClusters_MatchingPatients(dictPatSims, dictClusters)     # En este diccionario cada punto del cluster viene acompañado de la etiqueta de su paciente en forma pair(pat, array_de_similitudes)
-    
+    #print(dictClusters_pairs)
+
     # Visualization
-    visualizationOfClusterWithReducedData(data, numClusters, required_parameters_clustering['meshSize'], similarityMethod)
+    visualizationOfClusterWithReducedData(data, cluster_centroids, numClusters, dictClusters_pairs, similarityMethod)
 
     # Obtener propiedades de los clusters
     cluster_centroids = kmeans.cluster_centers_
