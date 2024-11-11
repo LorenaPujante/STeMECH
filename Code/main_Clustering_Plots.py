@@ -107,7 +107,7 @@ def main():
     validationScores.append(pairTotalSep)
     
 
-    #visualizationValidationScores_bis(validationScores, required_parameters_clustering['numRows'])
+    visualizationValidationScores_bis(validationScores, required_parameters_clustering['numRows'])
 
 
 
