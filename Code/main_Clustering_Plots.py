@@ -31,9 +31,6 @@ def main():
     
         # Read data from files
         data, pats = readCSVToSimilarityMatrix(simMethod)
-        print(pats)
-        print(data)
-        print(type(data))
         data_np = np.array(data)
         
         # Diccionario en el que cada paciente tiene sus similitudes
@@ -42,13 +39,10 @@ def main():
             pat = pats[i]
             sims = data[i]
             dictPatSims[pat] = sims
-        for label, pat in dictPatSims.items():
-            print("{}: {}".format(label, pat))
-
+        
         # Clustering
         dictClusters_pairs, cluster_centroids, silhouette, ch, db, ssw, ssb, bh, hartigan, xu, dunn, xb, huberts, rmssdt, sd, avgScattering, totalSeparation = clusteringKMeans(data_np, dictPatSims, k, simMethod)
-        print(cluster_centroids)
-
+        
         # Mostrar resultados Clustering
         writeResultsClustering_specificK(simMethod, k, dictClusters_pairs, cluster_centroids)
 
@@ -68,6 +62,14 @@ def main():
         sd_scores.append(sd)
         avgScat_scores.append(avgScattering)
         totalSep_scores.append(totalSeparation)
+
+        print(silhouette)
+        nameFolder = required_parameters['nameFolder_Outputs']
+        fileName = nameFolder + '/' + "clustering_{}_K{}.txt".format(getSimilarityMethodName_Short(simMethod), k)
+        file = open(fileName, "a")
+        line = "\n · Silhouette: {}".format(silhouette)
+        file.write(line)
+        file.close()
 
     validationScores = []
     # Compactness
@@ -105,7 +107,7 @@ def main():
     validationScores.append(pairTotalSep)
     
 
-    visualizationValidationScores_bis(validationScores, required_parameters_clustering['numRows'])
+    #visualizationValidationScores_bis(validationScores, required_parameters_clustering['numRows'])
 
 
 
