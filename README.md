@@ -42,8 +42,8 @@ There are 4 _main_ python files to execute the different parts of the framework.
 The parts of the frameworks are:
 - [**main.py**](https://github.com/LorenaPujante/STeMECH/blob/main/Code/main.py): TODO
 - [**main_Heatmap.py**](https://github.com/LorenaPujante/STeMECH/blob/main/Code/main_Heatmap.py): TODO
-- [**main_Clustering_Ks.py**](https://github.com/LorenaPujante/STeMECH/blob/main/Code/main_Clustering_Ks.py): TODO
-- [**main_Clustering_Plots.py**](https://github.com/LorenaPujante/STeMECH/blob/main/Code/main_Clustering_Plots.py): TODO
+- [**main_Clustering_Ks_sil.py**](https://github.com/LorenaPujante/STeMECH/blob/main/Code/main_Clustering_Ks.py): TODO
+- [**main_Clustering_Plots_sil.py**](https://github.com/LorenaPujante/STeMECH/blob/main/Code/main_Clustering_Plots.py): TODO
 
 The file [**main_NumCases.py**](https://github.com/LorenaPujante/STeMECH/blob/main/Code/main_NumCases.py) can be used to search the number of positive cases for a microorganism for each week of the dataset. It also searches the cases by week and floor. It can be used to have an approximate idea of the number of patients whose trajectories will be studied depending on the parameters' values.  
 
