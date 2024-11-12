@@ -340,7 +340,7 @@ def visualizationOfClusterWithReducedData(data, cluster_centroids, numClusters, 
     # Reduce data to 2 dimensions
     data_and_centroids = np.concatenate((data, cluster_centroids))
     pca = PCA(n_components=2)
-    data_and_centroids_red = pca.fit(data)
+    pca = pca.fit(data)
     data_and_centroids_red = pca.transform(data_and_centroids)
     reduced_data = data_and_centroids_red[:-numClusters]
     cluster_centroids_red = data_and_centroids_red[len(data_and_centroids_red)-numClusters:]
