@@ -70,7 +70,7 @@ def visualizationValidationScores_sil(pairSilhouette, minClusters, maxClusters, 
                   linewidth=1.5, 
                   marker='.', markersize=10)
     
-    plt.title(title, fontweight='bold', fontsize=11)
+    plt.title("{}\n\n-\n{}".format(title, getNameValidationScore('sil')), fontweight='bold', fontsize=11)
     
     plt.grid(True)
 
@@ -78,6 +78,7 @@ def visualizationValidationScores_sil(pairSilhouette, minClusters, maxClusters, 
     plt.xlabel('k', fontsize=10, style= "italic", color='dimgrey', loc='right')
     plt.xticks(dataX, fontsize=11)
     plt.yticks(fontsize=11)
+    plt.ylim(0, 0.3)
     
     # Margenes
     plt.subplots_adjust(left=0.1,
@@ -86,10 +87,10 @@ def visualizationValidationScores_sil(pairSilhouette, minClusters, maxClusters, 
                     top=0.82,
                     hspace=0.6)  
 
-    textTitle = "Validation scores"
+    '''textTitle = "Validation scores"
     if similarityMethod is not None:
         textTitle += " - {}".format(similarityMethod)
-    plt.suptitle(textTitle, fontsize=20, bbox={'facecolor': 'aliceblue', 'pad':5})
+    plt.suptitle(textTitle, fontsize=20, bbox={'facecolor': 'aliceblue', 'pad':5})'''
     
 
     nameFile = "./figure_SilhouetteScores"
@@ -194,14 +195,14 @@ def visualizationValidationScores_bis(validationScores, numRows):
     plt.show()
 
 
-def visualizationValidationScores_bis_sil(pairSilhouette, numRows):
+def visualizationValidationScores_bis_sil(pairSilhouette):
     simMethods = []
     for sm in required_parameters['similarityFunctions']:
         simMethods.append(getSimilarityMethodName_Short(sm))
     
     barLabels = []
     for value in pairSilhouette[1]:
-        value_round = round(value, 2)
+        value_round = round(value, 3)
         barLabels.append(value_round)
 
     dataX = simMethods 
@@ -213,14 +214,14 @@ def visualizationValidationScores_bis_sil(pairSilhouette, numRows):
                     width=0.8,
                     label=barLabels)
         
-    plt.bar_label(out, labels=barLabels, label_type='edge', padding=1)
+    plt.bar_label(out, labels=barLabels, label_type='edge', padding=1, fontsize=11)
         
     # Para aumentar un poco el eje Y
-    plt.ylim(-1.1, 1.1)
+    plt.ylim(0, 1.05)   #plt.ylim(-1.1, 1.1)    # TODO: Cambiado porque no tenemos Silhouettes negativos
         
     plt.tight_layout()
 
-    plt.title(pairSilhouette[0], fontweight='bold', fontsize=11)
+    plt.title(pairSilhouette[0], fontweight='bold', fontsize=14)
 
     plt.grid(axis='y')
     plt.xlabel('Similarity method', fontsize=10, style= "italic", color='dimgrey', loc='right')
