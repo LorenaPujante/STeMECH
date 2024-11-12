@@ -157,8 +157,6 @@ def writeResultsClustering_allKs_sil(allPairsSilhouette, minClusters, maxCluster
     file = open(fileName, "w")
 
     for similarityLabel, silScores in allPairsSilhouette.items():
-        print(similarityLabel)
-        print(silScores)
         line = "* {}\n".format(similarityLabel)
         file.write(line)
         numTestClusters = maxClusters-minClusters + 1
